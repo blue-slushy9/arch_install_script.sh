@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # This is for an Arch Linux VM running on KVM on Debian 12;
 
 # View your network interfaces (the VM, not the host system, which has
