@@ -23,7 +23,7 @@ timedatectl set-timezone America/Los_Angeles
 
 lsblk
 
-OR
+# OR
 
 fdisk -l
 
@@ -31,19 +31,57 @@ fdisk -l
 
 '''
 
-The ideal disk layout, per this author, is as follows:
+# The ideal disk layout, per this author, is as follows:
 
 EFI = 1 GB
 
-Boot = 1 GB
+# ChatGPT says you do probably not need a boot partition for the VM;
+Boot
 
-/ = 30 GBs
+/ = 10 GBs
 
-home = 20 GBs
+home = 7 GBs
 
-# should be equal, in this case, to the VM RAM, which is 2GB
+# Swap should be equal, in this case, to the VM RAM, which is 2GB;
 swap = 2 GB
+
+Total Disk Space = 20 GBs
 
 '''
 
+# Prep the block/storage device for partitioning;
 
+fdisk /dev/vda
+
+# Once in fdisk mode, you can type 'n' to create a new partition;
+
+#n
+
+# You won't need to use extended partitions (which are used to bypass the
+# limit of 4 primary partitions on a single MBR disk);
+
+#p
+
+# The partition numbers will be 1-4, you can just hit Enter to use the default
+# numbers;
+
+# First sector will the EFI partition, you can make it 1 GB; you can hit Enter
+# to use the default first partition on all of these;
+
+#+1G
+
+# Second sector will be the root partition, you can make it 10 GBs;
+
+#+10G
+
+# Third partition will be the home partition, you can make it 7 GBs;
+#+7G
+
+# The last partition is the swap partition, it can be 2 GBs;
+# you can just hit Enter for the default last sector (we are using all of the
+# remaining disk space anyway);
+
+# Finally, type 'w' to write your configuration to the disk;
+#w
+
+#  
